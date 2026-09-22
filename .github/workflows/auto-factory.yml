@@ -46,7 +46,8 @@ jobs:
       - name: Check out the AutoFactory tool
         uses: actions/checkout@v4
         with:
-          repository: alawrenceld/launchdarkly-auto-factory
+          # QBR 2026 workshop: our group's fork, per exercise step 6.
+          repository: MadelinePreston-LaunchDarkly/launchdarkly-auto-factory
           ref: main
           path: tool
 
@@ -75,6 +76,10 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
           LD_APP_PROJECT_KEY: ${{ vars.LD_APP_PROJECT_KEY }}
+          # QBR 2026 workshop: we run on the STAGING instance. env.ts defaults
+          # this to https://app.launchdarkly.com, so without the override the
+          # factory would read and write production.
+          LD_BASE_URL: https://ld-stg.launchdarkly.com
           GRAPH_KEY: gha-auto-factory
           ENABLE_FLAG_CREATION: "true" # create real flags/metrics in the app project
           ENABLE_CODE_CHANGES: "true" # commit wiring + tests to the PR branch
