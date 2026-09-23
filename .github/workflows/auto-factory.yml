@@ -50,6 +50,11 @@ jobs:
           repository: MadelinePreston-LaunchDarkly/launchdarkly-auto-factory
           ref: main
           path: tool
+          # Our AutoFactory fork is PRIVATE, and the default GITHUB_TOKEN is
+          # scoped to this repo only, so it cannot clone another private repo.
+          # TOOL_REPO_TOKEN is a PAT with read access to the fork. Without this
+          # the step fails "Repository not found" even though the repo exists.
+          token: ${{ secrets.TOOL_REPO_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
