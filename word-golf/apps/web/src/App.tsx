@@ -20,7 +20,7 @@ import {
   type WordGraph,
   PRACTICE_DIFFICULTIES,
 } from "@word-golf/engine";
-import { FLAG_KEYS, METRIC_EVENTS, useFlag, useTrack } from "@word-golf/ld";
+import { FLAG_KEYS, METRIC_EVENTS, useFlag, useVariation, useTrack } from "@word-golf/ld";
 import { graph, practicePools, startPool, targetPool } from "./words.js";
 
 const PRACTICE_DIFFICULTY_LEVELS = PRACTICE_DIFFICULTIES;
@@ -56,6 +56,10 @@ export function App() {
   // "medium" avoids crashing puzzle generation on the control path.
   const wordPoolDifficulty = normalizePracticeDifficulty(wordPoolDifficultyRaw);
   const showPoweredByFooter = useFlag(FLAG_KEYS.showPoweredByFooter);
+  // String-multivariate flag: "control" → "Left" stat hidden (existing behavior);
+  // "v1" → "Left" stat visible showing moves remaining before par.
+  // Fail-safe default is "control" so the stat is never shown when LD is offline.
+  const showMovesLeftVariation = useVariation(FLAG_KEYS.showMovesLeft);
 
   // Business metric: fire once when the footer is rendered (treatment path).
   // Wrapped in try/catch so a tracking failure can never break the page.
@@ -325,7 +329,9 @@ export function App() {
 
       <section className="scoreboard">
         <Stat label="Moves" value={String(moves)} />
-        <Stat label="Left" value={puzzle.par === null ? "—" : String(Math.max(0, puzzle.par - moves))} />
+        {showMovesLeftVariation === "v1" && (
+          <Stat label="Left" value={puzzle.par === null ? "—" : String(Math.max(0, puzzle.par - moves))} />
+        )}
         <Stat label="Par" value={puzzle.par === null ? "\u2014" : String(puzzle.par)} />
         <Stat
           label={enableRandomPuzzle && !isDaily ? "Practice" : "Daily"}

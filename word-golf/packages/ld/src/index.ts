@@ -13,4 +13,4 @@ export {
 } from "./events.js";
 export { LDContext, defaultLD, type WordGolfLD } from "./context.js";
 export { LDRoot, type LDRootProps } from "./provider.js";
-export { useFlags, useFlag, useTrack, useLDLive } from "./hooks.js";
+export { useFlags, useFlag, useVariation, useTrack, useLDLive } from "./hooks.js";

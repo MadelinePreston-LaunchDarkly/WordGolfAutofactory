@@ -89,6 +89,15 @@
       "defaultVariation": 0,
       "hypothesis": "Session replay unlocks LD flag Monitoring and session-level debugging; off by default for input privacy.",
       "watchedMetric": null
+    },
+    {
+      "key": "show-moves-left",
+      "name": "Show Moves Left (remaining to par)",
+      "kind": "string",
+      "variations": ["control", "v1"],
+      "defaultVariation": 0,
+      "hypothesis": "Displaying moves remaining before par increases the rate of making par.",
+      "watchedMetric": "made_par"
     }
   ]
 }

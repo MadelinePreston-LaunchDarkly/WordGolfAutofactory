@@ -15,6 +15,7 @@ export const FLAG_KEYS = {
   enableDifficultyPickerUx: "enable-difficulty-picker-ux",
   showPoweredByFooter: "show-powered-by-footer",
   enableSessionReplay: "enable-session-replay",
+  showMovesLeft: "show-moves-left",
 } as const;
 
 export type ParAlgorithm = "shortest" | "no-reuse" | "heuristic";
@@ -31,6 +32,8 @@ export interface Flags {
   "enable-difficulty-picker-ux": boolean;
   "show-powered-by-footer": boolean;
   "enable-session-replay": boolean;
+  /** String-multivariate: "control" = stat hidden; "v1" = stat visible. */
+  "show-moves-left": string;
 }
 
 /**
@@ -56,4 +59,7 @@ export const FLAG_DEFAULTS: Flags = {
   // Control path: false → session replay off (privacy default for word-game input).
   // Treatment path: true  → LDRecord.start() records anonymized replays in LD.
   "enable-session-replay": false,
+  // Control path: "control" → "Left" stat hidden (existing scoreboard behavior).
+  // Treatment path: "v1"  → "Left" stat visible showing moves remaining before par.
+  "show-moves-left": "control",
 };
