@@ -2,7 +2,13 @@
   "schemaVersion": "1.2",
   "flagKey": "show-moves-left",
   "scope": "frontend",
-  "releasePlan": {},
+  "releasePlan": {
+    "metricKeys": [
+      "made_par"
+    ],
+    "randomizationUnit": "user",
+    "notes": "Primary guardrail: reuse existing made_par event (fires when puzzle is won at/under par). No new track() call needed. Control path: showMovesLeftVariation === 'control' (stat hidden). Treatment path: showMovesLeftVariation === 'v1' (Left stat visible). Flag is string-multivariate; wired via useVariation(FLAG_KEYS.showMovesLeft) === 'v1' in App.tsx."
+  },
   "releaseIntent": {
     "_instructions": "Human approver: edit freely. action: auto (release on deploy) | hold (do not release yet) | manual (a human runs the release). Structured fields execute; anything else goes in notes (an agent will structure it on the PR for your review). Blank fields = default auto-release on deploy. prerequisites: [{\"flagKey\": \"flag-xyz\", \"variation\": \"on\"}]. notBefore: YYYY-MM-DD. reference: ticket/doc URL.",
     "action": "auto",
