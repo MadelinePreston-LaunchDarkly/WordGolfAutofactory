@@ -79,7 +79,11 @@ jobs:
           LD_API_KEY: ${{ secrets.LD_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
-          LD_APP_PROJECT_KEY: ${{ vars.LD_APP_PROJECT_KEY }}
+          # LAB TEST BRANCH ONLY. Pinned to the lab app project so proving the
+          # Action out does not create flags in the group's word-golf project.
+          # The group's branches keep using vars.LD_APP_PROJECT_KEY; do not
+          # merge this line into qbr-2026-workshop.
+          LD_APP_PROJECT_KEY: samplerunlab-app
           # QBR 2026 workshop: we run on the STAGING instance. env.ts defaults
           # this to https://app.launchdarkly.com, so without the override the
           # factory would read and write production.

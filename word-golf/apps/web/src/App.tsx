@@ -325,6 +325,7 @@ export function App() {
 
       <section className="scoreboard">
         <Stat label="Moves" value={String(moves)} />
+        <Stat label="Left" value={puzzle.par === null ? "—" : String(Math.max(0, puzzle.par - moves))} />
         <Stat label="Par" value={puzzle.par === null ? "\u2014" : String(puzzle.par)} />
         <Stat
           label={enableRandomPuzzle && !isDaily ? "Practice" : "Daily"}
