@@ -4,7 +4,9 @@
   "scope": "frontend",
   "releasePlan": {
     "metricKeys": [
-      "made_par"
+      "show-moves-left-made-par",
+      "show-moves-left-puzzle-completed",
+      "show-moves-left-abandoned"
     ],
     "randomizationUnit": "user",
     "notes": "Primary guardrail: reuse existing made_par event (fires when puzzle is won at/under par). No new track() call needed. Control path: showMovesLeftVariation === 'control' (stat hidden). Treatment path: showMovesLeftVariation === 'v1' (Left stat visible). Flag is string-multivariate; wired via useVariation(FLAG_KEYS.showMovesLeft) === 'v1' in App.tsx."
