@@ -1,0 +1,19 @@
+{
+  "//": "AutoFactory push gate. Label-gated on purpose: AUTOFACTORY_REQUIRE_LABEL=true means the hook only blocks a push or PR when it is labelled 'autofactory', so routine pushes on the shared qbr-2026-workshop branch are unaffected. Drop the env var to gate EVERY push.",
+  "env": {
+    "AUTOFACTORY_REQUIRE_LABEL": "true"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/autofactory-gate.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}
