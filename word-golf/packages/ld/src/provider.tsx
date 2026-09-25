@@ -64,6 +64,27 @@ export function LDRoot({ clientSideID, children }: LDRootProps) {
   );
 }
 
+/**
+ * Endpoint overrides for a non-production LaunchDarkly instance.
+ *
+ * The browser SDK talks to LaunchDarkly's client-side hosts, which are separate
+ * from the REST API. Left at their defaults a staging client-side ID hits
+ * production and every evaluation falls back to the in-code default, silently:
+ * no error, the feature just never appears. Set all three VITE_LD_*_URL vars
+ * together (see .env.example); with none set, behaviour is unchanged.
+ */
+function ldEndpoints(): {
+  baseUrl?: string;
+  streamUrl?: string;
+  eventsUrl?: string;
+} {
+  const baseUrl = import.meta.env.VITE_LD_BASE_URL;
+  const streamUrl = import.meta.env.VITE_LD_STREAM_URL;
+  const eventsUrl = import.meta.env.VITE_LD_EVENTS_URL;
+  if (!baseUrl || !streamUrl || !eventsUrl) return {};
+  return { baseUrl, streamUrl, eventsUrl };
+}
+
 /** Wraps createLDReactProvider so we can pass a runtime client-side ID. */
 function LDConnected({
   clientSideID,
@@ -81,6 +102,7 @@ function LDConnected({
           ldOptions: {
             plugins: [getObservabilityPlugin(), getSessionReplayPlugin()],
             useCamelCaseFlagKeys: false,
+            ...ldEndpoints(),
           },
         }
       ),
