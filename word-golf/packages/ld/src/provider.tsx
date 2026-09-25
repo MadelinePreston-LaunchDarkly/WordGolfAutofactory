@@ -74,15 +74,18 @@ export function LDRoot({ clientSideID, children }: LDRootProps) {
  * together (see .env.example); with none set, behaviour is unchanged.
  */
 function ldEndpoints(): {
-  baseUrl?: string;
-  streamUrl?: string;
-  eventsUrl?: string;
+  baseUri?: string;
+  streamUri?: string;
+  eventsUri?: string;
 } {
-  const baseUrl = import.meta.env.VITE_LD_BASE_URL;
-  const streamUrl = import.meta.env.VITE_LD_STREAM_URL;
-  const eventsUrl = import.meta.env.VITE_LD_EVENTS_URL;
-  if (!baseUrl || !streamUrl || !eventsUrl) return {};
-  return { baseUrl, streamUrl, eventsUrl };
+  const baseUri = import.meta.env.VITE_LD_BASE_URL;
+  const streamUri = import.meta.env.VITE_LD_STREAM_URL;
+  const eventsUri = import.meta.env.VITE_LD_EVENTS_URL;
+  if (!baseUri || !streamUri || !eventsUri) return {};
+  // The SDK option names end in `Uri`, not `Url`. Unknown options are ignored
+  // silently, so getting this wrong produces no error at all: every evaluation
+  // just returns the in-code default while the SDK happily talks to production.
+  return { baseUri, streamUri, eventsUri };
 }
 
 /** Wraps createLDReactProvider so we can pass a runtime client-side ID. */
